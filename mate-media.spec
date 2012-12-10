@@ -4,12 +4,12 @@
 
 Summary:	MATE media programs
 Name:		mate-media
-Version:	1.2.0
+Version:	1.4.0
 Release:	1
 License:	GPLv2+ and GFDL+
 Group:		Graphical desktop/GNOME
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.2/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/%{lua: print (string.match(rpm.expand("%{version}"),"%d+.%d+"))}/%{name}-%{version}.tar.xz
 
 BuildRequires: docbook-dtd412-xml
 BuildRequires: intltool
@@ -48,8 +48,8 @@ libraries for running MATE media.
 %package -n %{devname}
 Summary:	Development libraries, include files for MATE media
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{devname}
 Panel libraries and header files for MATE media.
@@ -75,13 +75,10 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %files -f  %{name}-2.0.lang
 %doc AUTHORS NEWS README
 %{_sysconfdir}/mateconf/schemas/mate-audio-profiles.schemas
-%{_sysconfdir}/mateconf/schemas/mate-sound-recorder.schemas
 %{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
 %{_bindir}/*
 %{_libdir}/glade3/modules/libmate-media-profiles.so
-%{_datadir}/applications/mate-sound-recorder.desktop
 %{_datadir}/mate-media
-%{_datadir}/mate-sound-recorder
 %{_datadir}/applications/mate-gstreamer-properties.desktop
 %{_datadir}/applications/mate-volume-control.desktop
 %{_datadir}/glade3/catalogs/mate-media-profiles.xml
@@ -91,9 +88,6 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %dir %{_datadir}/sounds/mate/
 %{_datadir}/sounds/mate/default/
 %{_iconsdir}/mate/48x48/apps/gstreamer-properties.png
-%{_iconsdir}/hicolor/*/*/*.*
-# mate help file
-%{_datadir}/mate/help
 
 %files -n %{libname}
 %{_libdir}/libmate-media-profiles.so.%{major}*
@@ -104,4 +98,11 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %{_includedir}/mate-media/profiles/*
 %{_libdir}/libmate-media-profiles.so
 %{_libdir}/pkgconfig/mate-media-profiles.pc
+
+
+
+%changelog
+* Tue Jun 05 2012 Matthew Dawkins <mattydaw@mandriva.org> 1.2.0-1
++ Revision: 802508
+- imported package mate-media
 
