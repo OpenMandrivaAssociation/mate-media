@@ -1,21 +1,18 @@
-%define major	0
-%define	libname %mklibname mate-media-profiles %{major}
-%define	devname %mklibname mate-media-profiles -d
+%define url_ver %(echo %{version}|cut -d. -f1,2)
 
 Summary:	MATE media programs
 Name:		mate-media
-Version:	1.4.0
+Version:	1.8.0
 Release:	1
-License:	GPLv2+ and GFDL+
+License:	GPLv2+
 Group:		Graphical desktop/GNOME
-URL:		http://mate-desktop.org
+Url:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/%{lua: print (string.match(rpm.expand("%{version}"),"%d+.%d+"))}/%{name}-%{version}.tar.xz
 
-BuildRequires: docbook-dtd412-xml
 BuildRequires: intltool
+BuildRequires: itstool
 BuildRequires: mate-common
-BuildRequires: mate-conf
-BuildRequires: xsltproc
+BuildRequires: yelp-tools
 BuildRequires: pkgconfig(gstreamer-0.10)
 BuildRequires: pkgconfig(gstreamer-plugins-base-0.10)
 BuildRequires: pkgconfig(gtk+-2.0)
@@ -23,8 +20,6 @@ BuildRequires: pkgconfig(libcanberra-gtk)
 BuildRequires: pkgconfig(gladeui-1.0)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(mateconf-2.0)
-BuildRequires: pkgconfig(mate-doc-utils)
 BuildRequires: pkgconfig(mate-keybindings)
 BuildRequires: pkgconfig(unique-1.0)
 
@@ -32,77 +27,36 @@ Requires:   gstreamer0.10-plugins-good
 Requires:   gstreamer0.10-plugins-base
 Suggests:   gstreamer0.10-flac
 Suggests:   gstreamer0.10-speex
-Requires(post,preun):	mate-conf
 
 %description
 This package contains a few media utilities for the MATE desktop,
 including a sound recorder and an audio mixer.
 
-%package -n %{libname}
-Summary:	%{summary}
-Group:		System/Libraries
-
-%description -n %{libname}
-libraries for running MATE media.
-
-%package -n %{devname}
-Summary:	Development libraries, include files for MATE media
-Group:		Development/C
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel = %{EVRD}
-
-%description -n %{devname}
-Panel libraries and header files for MATE media.
-
 %prep
 %setup -q 
 %apply_patches
+NOCONFIGURE=yes ./autogen.sh
 
 %build
-NOCONFIGURE=yes ./autogen.sh
-%configure2_5x \
-	--disable-static \
-	--disable-scrollkeeper
+%configure2_5x
 
 %make
 
 %install
 MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
-find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
 %find_lang %{name}-2.0 --with-gnome --all-name
 
 %files -f  %{name}-2.0.lang
 %doc AUTHORS NEWS README
-%{_sysconfdir}/mateconf/schemas/mate-audio-profiles.schemas
 %{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
-%{_bindir}/*
-%{_libdir}/glade3/modules/libmate-media-profiles.so
+%{_bindir}/mate-volume-control
+%{_bindir}/mate-volume-control-applet
 %{_datadir}/mate-media
-%{_datadir}/applications/mate-gstreamer-properties.desktop
 %{_datadir}/applications/mate-volume-control.desktop
-%{_datadir}/glade3/catalogs/mate-media-profiles.xml
-%{_datadir}/mate-gstreamer-properties/gstreamer-properties.ui
-%{_datadir}/mate-gstreamer-properties/icons/gstreamer-properties.png
 %dir %{_datadir}/sounds/
 %dir %{_datadir}/sounds/mate/
 %{_datadir}/sounds/mate/default/
-%{_iconsdir}/mate/48x48/apps/gstreamer-properties.png
-
-%files -n %{libname}
-%{_libdir}/libmate-media-profiles.so.%{major}*
-
-%files -n %{devname}
-%dir %{_includedir}/mate-media
-%dir %{_includedir}/mate-media/profiles
-%{_includedir}/mate-media/profiles/*
-%{_libdir}/libmate-media-profiles.so
-%{_libdir}/pkgconfig/mate-media-profiles.pc
-
-
-
-%changelog
-* Tue Jun 05 2012 Matthew Dawkins <mattydaw@mandriva.org> 1.2.0-1
-+ Revision: 802508
-- imported package mate-media
+%{_mandir}/man1/mate-volume-control.1*
+%{_mandir}/man1/mate-volume-control-applet.1*
 
