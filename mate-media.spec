@@ -8,9 +8,7 @@ License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/%{lua: print (string.match(rpm.expand("%{version}"),"%d+.%d+"))}/%{name}-%{version}.tar.xz
-
 BuildRequires: intltool
-BuildRequires: itstool
 BuildRequires: mate-common
 BuildRequires: yelp-tools
 BuildRequires: pkgconfig(gstreamer-0.10)
