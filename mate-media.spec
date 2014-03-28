@@ -7,24 +7,23 @@ Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/%{lua: print (string.match(rpm.expand("%{version}"),"%d+.%d+"))}/%{name}-%{version}.tar.xz
-BuildRequires: intltool
-BuildRequires: mate-common
-BuildRequires: yelp-tools
-BuildRequires: pkgconfig(gstreamer-0.10)
-BuildRequires: pkgconfig(gstreamer-plugins-base-0.10)
-BuildRequires: pkgconfig(gtk+-2.0)
-BuildRequires: pkgconfig(libcanberra-gtk)
-BuildRequires: pkgconfig(gladeui-1.0)
-BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(mate-keybindings)
-BuildRequires: pkgconfig(unique-1.0)
-
-Requires:   gstreamer0.10-plugins-good
-Requires:   gstreamer0.10-plugins-base
-Suggests:   gstreamer0.10-flac
-Suggests:   gstreamer0.10-speex
+Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+BuildRequires:	intltool
+BuildRequires:	mate-common
+BuildRequires:	yelp-tools
+BuildRequires:	pkgconfig(gstreamer-0.10)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(libcanberra-gtk)
+BuildRequires:	pkgconfig(gladeui-1.0)
+BuildRequires:	pkgconfig(libpulse)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(mate-keybindings)
+BuildRequires:	pkgconfig(unique-1.0)
+Requires:	gstreamer0.10-plugins-good
+Requires:	gstreamer0.10-plugins-base
+Suggests:	gstreamer0.10-flac
+Suggests:	gstreamer0.10-speex
 
 %description
 This package contains a few media utilities for the MATE desktop,
