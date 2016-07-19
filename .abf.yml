@@ -1,2 +1,4 @@
+removed_sources:
+  mate-media-1.8.0.tar.xz: 8ec726baa6c6b02664a1190aedbc2467ec562a89
 sources:
-  "mate-media-1.8.0.tar.xz": 8ec726baa6c6b02664a1190aedbc2467ec562a89
+  mate-media-1.14.0.tar.xz: c9937f35fa3eb4209e2493f5d9838f5a5fb69886
