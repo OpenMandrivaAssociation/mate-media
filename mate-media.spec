@@ -2,12 +2,12 @@
 
 Summary:	MATE media programs
 Name:		mate-media
-Version:	1.14.0
+Version:	1.18.1
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
-Url:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Url:		https://mate-desktop.org
+Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	intltool
 BuildRequires:	mate-common
 BuildRequires:	yelp-tools
@@ -26,19 +26,20 @@ including a sound recorder and an audio mixer.
 %prep
 %setup -q 
 %apply_patches
-NOCONFIGURE=yes ./autogen.sh
 
 %build
-%configure2_5x --with-gtk=3.0
-
+#NOCONFIGURE=yes ./autogen.sh
+%configure
 %make
 
 %install
-MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
+MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
+%makeinstall_std
 
-%find_lang %{name}-2.0 --with-gnome --all-name
+# locales
+%find_lang %{name} --with-gnome --all-name
 
-%files -f  %{name}-2.0.lang
+%files -f  %{name}.lang
 %doc AUTHORS NEWS README
 %{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
 %{_bindir}/mate-volume-control
