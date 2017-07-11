@@ -5,41 +5,40 @@ Name:		mate-media
 Version:	1.18.1
 Release:	1
 License:	GPLv2+
-Group:		Graphical desktop/GNOME
+Group:		Graphical desktop/Other
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+
+BuildRequires:	desktop-file-utils
 BuildRequires:	intltool
+BuildRequires:	itstool
 BuildRequires:	mate-common
-BuildRequires:	yelp-tools
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gio-2.0)
+BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(libcanberra-gtk3)
 BuildRequires:	pkgconfig(libmatemixer)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(gobject-2.0)
+BuildRequires:	pkgconfig(mate-desktop-2.0)
 BuildRequires:	pkgconfig(mate-keybindings)
 BuildRequires:	pkgconfig(unique-3.0)
+BuildRequires:	yelp-tools
 
 %description
-This package contains a few media utilities for the MATE desktop,
-including a sound recorder and an audio mixer.
+The MATE Desktop Environment is the continuation of GNOME 2. It provides an
+intuitive and attractive desktop environment using traditional metaphors for
+Linux and other Unix-like operating systems.
 
-%prep
-%setup -q 
-%apply_patches
+MATE is under active development to add support for new technologies while
+preserving a traditional desktop experience.
 
-%build
-#NOCONFIGURE=yes ./autogen.sh
-%configure
-%make
+This package provides a few media utilities for the MATE desktop, including
+a volume control.
 
-%install
-MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
-%makeinstall_std
-
-# locales
-%find_lang %{name} --with-gnome --all-name
-
-%files -f  %{name}.lang
+%files -f %{name}.lang
 %doc AUTHORS NEWS README
 %{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
 %{_bindir}/mate-volume-control
@@ -51,4 +50,26 @@ MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %{_datadir}/sounds/mate/default/
 %{_mandir}/man1/mate-volume-control.1*
 %{_mandir}/man1/mate-volume-control-applet.1*
+
+#---------------------------------------------------------------------------
+
+%prep
+%setup -q 
+%apply_patches
+
+%build
+#NOCONFIGURE=yes ./autogen.sh
+%configure \
+	--disable-schemas-compile \
+	%{nil}
+%make
+
+%install
+%makeinstall_std
+
+# locales
+%find_lang %{name} --with-gnome --all-name
+
+%check
+desktop-file-validate %{buildroot}/%{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
 
