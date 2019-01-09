@@ -3,7 +3,7 @@
 Summary:	MATE media programs
 Name:		mate-media
 Version:	1.18.2
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Graphical desktop/Other
 Url:		https://mate-desktop.org
