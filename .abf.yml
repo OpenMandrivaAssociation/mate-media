@@ -2,6 +2,7 @@ removed_sources:
   mate-media-1.14.0.tar.xz: c9937f35fa3eb4209e2493f5d9838f5a5fb69886
   mate-media-1.18.1.tar.xz: 3de4b0cfad7ac1bbf4b46363a8db78637e8fade6
   mate-media-1.18.2.tar.xz: c4d62730c85282d4981323b250acaf5a17f851db
+  mate-media-1.20.0.tar.xz: d854f83d91838342b6414f9c44e2a7082b655270
   mate-media-1.8.0.tar.xz: 8ec726baa6c6b02664a1190aedbc2467ec562a89
 sources:
-  mate-media-1.20.0.tar.xz: d854f83d91838342b6414f9c44e2a7082b655270
+  mate-media-1.20.2.tar.xz: bf7e97901b94bad7efd7b14dda713ef9456f2802

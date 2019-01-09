@@ -2,7 +2,7 @@
 
 Summary:	MATE media programs
 Name:		mate-media
-Version:	1.20.0
+Version:	1.20.2
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/Other
@@ -54,22 +54,21 @@ a volume control.
 #---------------------------------------------------------------------------
 
 %prep
-%setup -q 
-%apply_patches
+%setup -q
+%autopatch -p1
 
 %build
 #NOCONFIGURE=yes ./autogen.sh
 %configure \
 	--disable-schemas-compile \
 	%{nil}
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # locales
 %find_lang %{name} --with-gnome --all-name
 
 %check
 desktop-file-validate %{buildroot}/%{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
-
