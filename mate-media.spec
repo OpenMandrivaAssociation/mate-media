@@ -42,10 +42,13 @@ a volume control.
 %files -f %{name}.lang
 %doc AUTHORS NEWS README
 %{_sysconfdir}/xdg/autostart/mate-volume-control-status-icon.desktop
+%{_libexecdir}/mate-volume-control-applet
 %{_bindir}/mate-volume-control
-%{_bindir}/mate-volume-control-applet
+%{_bindir}/mate-volume-control-status-icon
 %{_datadir}/mate-media
 %{_datadir}/applications/mate-volume-control.desktop
+%{_datadir}/dbus-1/services/org.mate.panel.applet.GvcAppletFactory.service
+%{_datadir}/mate-panel/applets/org.mate.applets.GvcApplet.mate-panel-applet
 %dir %{_datadir}/sounds/
 %dir %{_datadir}/sounds/mate/
 %{_datadir}/sounds/mate/default/
