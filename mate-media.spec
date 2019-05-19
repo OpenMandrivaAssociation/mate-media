@@ -41,7 +41,7 @@ a volume control.
 
 %files -f %{name}.lang
 %doc AUTHORS NEWS README
-%{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
+%{_sysconfdir}/xdg/autostart/mate-volume-control-status-icon.desktop
 %{_bindir}/mate-volume-control
 %{_bindir}/mate-volume-control-applet
 %{_datadir}/mate-media
@@ -72,4 +72,4 @@ a volume control.
 %find_lang %{name} --with-gnome --all-name
 
 %check
-desktop-file-validate %{buildroot}/%{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
+desktop-file-validate %{buildroot}/%{_sysconfdir}/xdg/autostart/mate-volume-control-status-icon.desktop
