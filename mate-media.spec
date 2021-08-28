@@ -27,6 +27,7 @@ BuildRequires:	pkgconfig(gobject-2.0)
 BuildRequires:	pkgconfig(mate-desktop-2.0)
 BuildRequires:	pkgconfig(mate-keybindings)
 BuildRequires:	pkgconfig(unique-3.0)
+BuildRequires:	pkgconfig(mpfr)
 BuildRequires:	yelp-tools
 
 %description
