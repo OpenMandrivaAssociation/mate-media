@@ -54,7 +54,7 @@ a volume control.
 %dir %{_datadir}/sounds/mate/
 %{_datadir}/sounds/mate/default/
 %{_mandir}/man1/mate-volume-control.1*
-#{_mandir}/man1/mate-volume-control-applet.1*
+%{_mandir}/man1/mate-volume-control-status-icon.1.*
 
 #---------------------------------------------------------------------------
 
