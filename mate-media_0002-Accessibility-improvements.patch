@@ -1,0 +1,82 @@
+From abcd53d092a838a777f1e0fa8555736d7540acb8 Mon Sep 17 00:00:00 2001
+From: vvillenave <valentin@villenave.net>
+Date: Wed, 10 Nov 2021 20:33:53 +0000
+Subject: [PATCH 2/3] Accessibility improvements
+
+- Make the speaker test dialog accessible
+- Add an accessible object for the Input level custom widget
+
+Co-authored-by: Valentin Villenave <vvillenave@hypra.fr>
+---
+ mate-volume-control/gvc-level-bar.c    | 14 ++++++++++++++
+ mate-volume-control/gvc-mixer-dialog.c |  3 +++
+ mate-volume-control/gvc-speaker-test.c |  1 +
+ 3 files changed, 18 insertions(+)
+
+diff --git a/mate-volume-control/gvc-level-bar.c b/mate-volume-control/gvc-level-bar.c
+index b697ed5..0d815fc 100644
+--- a/mate-volume-control/gvc-level-bar.c
++++ b/mate-volume-control/gvc-level-bar.c
+@@ -215,12 +215,23 @@ update_peak_value (GvcLevelBar *bar)
+         bar->priv->peak_fraction = value;
+ 
+         if (value > bar->priv->max_peak) {
++                AtkObject     *acc_obj;
++                char          *acc_string;
++                gdouble        peak_percentage;
++
+                 if (bar->priv->max_peak_id > 0)
+                         g_source_remove (bar->priv->max_peak_id);
+ 
+                 bar->priv->max_peak_id =
+                         g_timeout_add_seconds (1, (GSourceFunc) reset_max_peak, bar);
+                 bar->priv->max_peak = value;
++                /* Providing an accessible based on peaks, so that
++                 * it doesn’t get updated too often. */
++                acc_obj = gtk_widget_get_accessible (GTK_WIDGET (bar));
++                peak_percentage = round (value * 100.0);
++                acc_string = g_strdup_printf (_("Peak: %.0lf"), peak_percentage);
++                atk_object_set_name (acc_obj, acc_string);
++                g_free (acc_string);
+         }
+ 
+         layout = bar->priv->layout;
+@@ -753,6 +764,9 @@ gvc_level_bar_init (GvcLevelBar *bar)
+                           bar);
+ 
+         gtk_widget_set_has_window (GTK_WIDGET (bar), FALSE);
++
++        atk_object_set_role (gtk_widget_get_accessible (GTK_WIDGET (bar)),
++                                                        ATK_ROLE_STATIC);
+ }
+ 
+ static void
+diff --git a/mate-volume-control/gvc-mixer-dialog.c b/mate-volume-control/gvc-mixer-dialog.c
+index 1567eaa..ed0e40b 100644
+--- a/mate-volume-control/gvc-mixer-dialog.c
++++ b/mate-volume-control/gvc-mixer-dialog.c
+@@ -2108,6 +2108,9 @@ gvc_mixer_dialog_constructor (GType                  type,
+                                        GTK_ORIENTATION_HORIZONTAL);
+         gvc_level_bar_set_scale (GVC_LEVEL_BAR (self->priv->input_level_bar),
+                                  GVC_LEVEL_SCALE_LINEAR);
++        gtk_label_set_mnemonic_widget (GTK_LABEL (label),
++                                       self->priv->input_level_bar);
++        gtk_widget_set_can_focus (self->priv->input_level_bar, TRUE);
+         gtk_box_pack_start (GTK_BOX (box),
+                             self->priv->input_level_bar,
+                             TRUE, TRUE, 6);
+diff --git a/mate-volume-control/gvc-speaker-test.c b/mate-volume-control/gvc-speaker-test.c
+index cbca7f2..014188f 100644
+--- a/mate-volume-control/gvc-speaker-test.c
++++ b/mate-volume-control/gvc-speaker-test.c
+@@ -365,6 +365,7 @@ create_control (ca_context *canberra, MateMixerChannelPosition position)
+         gtk_box_pack_start (GTK_BOX (control), label, FALSE, FALSE, 0);
+ 
+         test_button = gtk_button_new_with_label (_("Test"));
++        gtk_label_set_mnemonic_widget (GTK_LABEL (label), test_button);
+         g_signal_connect (G_OBJECT (test_button),
+                           "clicked",
+                           G_CALLBACK (on_test_button_clicked),
+-- 
+2.36.1
+

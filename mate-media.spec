@@ -3,11 +3,14 @@
 Summary:	MATE media programs
 Name:		mate-media
 Version:	1.26.0
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Graphical desktop/Other
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Patch1:		mate-media_0001-Revert-Fix-desktop-file-validation-warnings.patch
+Patch2:		mate-media_0002-Accessibility-improvements.patch
+Patch3:		mate-media_0003-gvc-stream-applet-icon-fix-memory-leak.patch
 
 BuildRequires:	autoconf-archive
 BuildRequires:	desktop-file-utils
@@ -53,20 +56,20 @@ a volume control.
 %dir %{_datadir}/sounds/
 %dir %{_datadir}/sounds/mate/
 %{_datadir}/sounds/mate/default/
-%{_mandir}/man1/mate-volume-control.1*
-%{_mandir}/man1/mate-volume-control-status-icon.1.*
+%doc %{_mandir}/man1/mate-volume-control.1*
+%doc %{_mandir}/man1/mate-volume-control-status-icon.1.*
 
 #---------------------------------------------------------------------------
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 #NOCONFIGURE=yes ./autogen.sh
 %configure \
 	--disable-schemas-compile \
-	%{nil}
+	--enable-statusicon=yes
+
 %make_build
 
 %install
