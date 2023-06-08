@@ -2,15 +2,12 @@
 
 Summary:	MATE media programs
 Name:		mate-media
-Version:	1.26.0
-Release:	3
+Version:	1.26.1
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/Other
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
-Patch1:		mate-media_0001-Revert-Fix-desktop-file-validation-warnings.patch
-Patch2:		mate-media_0002-Accessibility-improvements.patch
-Patch3:		mate-media_0003-gvc-stream-applet-icon-fix-memory-leak.patch
 
 BuildRequires:	autoconf-archive
 BuildRequires:	desktop-file-utils
